@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Manager</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <div class="hero__content">
+        <p class="hero__eyebrow">Task Manager</p>
+        <h1>Plan the day with a little more clarity.</h1>
+        <p class="hero__copy">
+          Track task names, details, due times, recurring reminders, and missed deadlines without losing anything after refresh.
+        </p>
+      </div>
+
+      <aside class="hero__card" aria-label="Task overview">
+        <p class="hero__card-title">Today at a glance</p>
+        <div class="stats-grid">
+          <article class="stat-card">
+            <span class="stat-card__label">Total</span>
+            <strong class="stat-card__value" id="stat-total">0</strong>
+          </article>
+          <article class="stat-card">
+            <span class="stat-card__label">Completed</span>
+            <strong class="stat-card__value" id="stat-completed">0</strong>
+          </article>
+          <article class="stat-card">
+            <span class="stat-card__label">Incomplete</span>
+            <strong class="stat-card__value" id="stat-incomplete">0</strong>
+          </article>
+        </div>
+      </aside>
+    </header>
+
+    <main class="app-panel">
+      <section class="composer" aria-label="Add task">
+        <form id="task-form" novalidate>
+          <div class="composer__grid">
+            <div class="field-group field-group--wide">
+              <label for="task-title">Task name</label>
+              <input
+                class="field-control"
+                id="task-title"
+                name="title"
+                type="text"
+                maxlength="120"
+                placeholder="What needs attention? Max 120 characters."
+                autocomplete="off"
+                required
+              >
+            </div>
+
+            <div class="field-group field-group--wide">
+              <label for="task-details">Task details</label>
+              <textarea
+                class="field-control"
+                id="task-details"
+                name="details"
+                maxlength="400"
+                rows="3"
+                placeholder="Add context, steps, or a short note. Max 400 characters."
+              ></textarea>
+            </div>
+
+            <div class="field-group">
+              <label for="task-date">Task date</label>
+              <input class="field-control" id="task-date" name="date" type="date" required>
+            </div>
+
+            <div class="field-group">
+              <label for="task-time">Task time</label>
+              <input class="field-control" id="task-time" name="time" type="time" required>
+            </div>
+
+            <div class="field-group">
+              <label for="task-repeat">Repeat reminder</label>
+              <select class="field-control" id="task-repeat" name="repeat">
+                <option value="none">One time</option>
+                <option value="daily">Every day</option>
+                <option value="weekly">Every week</option>
+                <option value="monthly">Every month</option>
+              </select>
+            </div>
+
+            <div class="field-group field-group--action">
+              <button class="button button--primary" type="submit">Save task</button>
+            </div>
+          </div>
+
+          <p class="composer__hint">
+            When a task reaches its due time without completion, it moves into the incomplete state. Completed tasks stay completed even after their due time passes.
+          </p>
+          <p class="form-message" id="form-message" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section class="toolbar" aria-label="Task controls">
+        <div class="filters" role="tablist" aria-label="Filter tasks">
+          <button class="filter-chip is-active" type="button" role="tab" aria-selected="true" data-filter="all">
+            All
+          </button>
+          <button class="filter-chip" type="button" role="tab" aria-selected="false" data-filter="pending">
+            Pending
+          </button>
+          <button class="filter-chip" type="button" role="tab" aria-selected="false" data-filter="incomplete">
+            Incomplete
+          </button>
+          <button class="filter-chip" type="button" role="tab" aria-selected="false" data-filter="completed">
+            Completed
+          </button>
+        </div>
+
+        <div class="toolbar__meta">
+          <div class="task-summary">
+            <p class="task-summary__title" id="task-counter">No tasks yet</p>
+            <p class="task-summary__meta" id="task-breakdown">0 completed • 0 pending • 0 incomplete</p>
+          </div>
+
+          <label class="sort-control" for="sort-select">
+            <span>Sort</span>
+            <select class="field-control" id="sort-select">
+              <option value="soonest">Soonest first</option>
+              <option value="latest">Latest first</option>
+            </select>
+          </label>
+        </div>
+      </section>
+
+      <section class="task-section">
+        <ul class="task-list" id="task-list" aria-live="polite"></ul>
+
+        <div class="empty-state" id="empty-state" hidden>
+          <h2>No tasks yet</h2>
+          <p>Add your first task to start building momentum.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast-region" id="toast-region" aria-live="polite" aria-atomic="true"></div>
+
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>
